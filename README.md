@@ -1,59 +1,162 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🛒 Ecommerce Application
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+JWT Based Single Sign-On (SSO) Provider
 
-## About Laravel
+This is a Laravel-based Ecommerce application that works as the
+**Identity Provider** in a JWT-based Single Sign-On (SSO) system.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+When a user logs in here, a JWT token is generated and the user is
+automatically authenticated in the connected Foodpanda application.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+------------------------------------------------------------------------
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 🚀 Features
 
-## Learning Laravel
+-   Laravel 11 Application
+-   JWT Authentication
+-   SSO Token Generation
+-   Secure Login System
+-   Redirect-Based Cross-App Authentication
+-   Clean Architecture
+-   Production Ready Setup
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+------------------------------------------------------------------------
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 🧰 Tech Stack
 
-## Laravel Sponsors
+-   Laravel
+-   PHP 8+
+-   MySQL
+-   JWT (tymon/jwt-auth)
+-   Bootstrap (Blade UI)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+------------------------------------------------------------------------
 
-### Premium Partners
+# 📦 Installation Guide
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+## 1️⃣ Clone the Repository
 
-## Contributing
+    git clone https://github.com/ArifurDev/ecommerce-app.git
+    cd ecommerce-app
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+------------------------------------------------------------------------
 
-## Code of Conduct
+## 2️⃣ Install Backend Dependencies
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+    composer install
 
-## Security Vulnerabilities
+------------------------------------------------------------------------
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## 3️⃣ Install Frontend Dependencies
 
-## License
+    npm install
+    npm run build
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+------------------------------------------------------------------------
+
+## 4️⃣ Create Environment File
+
+    cp .env.example .env
+
+------------------------------------------------------------------------
+
+## 5️⃣ Configure Environment Variables
+
+Update `.env`:
+
+------------------------------------------------------------------------
+
+## 🔐 JWT Configuration (IMPORTANT)
+
+Generate JWT secret:
+
+    php artisan jwt:secret
+
+⚠ If using shared SSO, manually copy the same `JWT_SECRET` to both apps.
+
+Example:
+
+JWT_SECRET=shared_super_secret_key_here
+
+------------------------------------------------------------------------
+
+## 6️⃣ Generate Application Key
+
+    php artisan key:generate
+
+------------------------------------------------------------------------
+
+## 7️⃣ Run Database Migration
+
+    php artisan migrate --seed
+------------------------------------------------------------------------
+
+## 8️⃣ Start Development Server
+
+    php artisan serve
+
+Visit:
+
+http://127.0.0.1:8000
+
+------------------------------------------------------------------------
+
+# 🔄 How SSO Works
+
+1.  User logs in to Ecommerce.
+
+2.  JWT token is generated.
+
+3.  User is redirected to:
+
+    foodpanda-app/sso-login?token=JWT_TOKEN
+
+4.  Foodpanda verifies the token.
+
+5.  User is automatically logged in.
+
+------------------------------------------------------------------------
+
+# 🛡 Security Notes
+
+-   CSRF protection enabled
+-   Request validation implemented
+-   JWT expiration configured
+-   Shared secret required for SSO
+-   Use HTTPS in production
+-   Set APP_DEBUG=false in production
+
+------------------------------------------------------------------------
+
+# 🚀 Production Setup
+
+Update `.env`:
+
+APP_ENV=production\
+APP_DEBUG=false
+
+Then run:
+
+    php artisan config:cache
+    php artisan route:cache
+    php artisan view:cache
+
+Ensure:
+
+-   Correct database credentials
+-   Same JWT_SECRET as Foodpanda app
+-   Domain points to /public
+-   HTTPS enabled
+
+------------------------------------------------------------------------
+
+# 👨‍💻 Author
+
+Arifur Rahman Rifat\
+GitHub: https://github.com/ArifurDev
+
+------------------------------------------------------------------------
+
+# 📜 License
+
+This project is built for educational and demonstration purposes.
